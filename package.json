@@ -1,6 +1,6 @@
 {
   "name": "docusee",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Docusee created for create web site with documentation from json-object",
   "main": "bin/index.js",
   "scripts": {
@@ -17,7 +17,7 @@
     "docs-generator",
     "docusee",
     "documentation",
-    "generator",
+    "generator"
   ],
   "type": "module",
   "bin": {
