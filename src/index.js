@@ -172,12 +172,6 @@ function getSchema() {
             title: {
                 type: "string",
             },
-            navigation: {
-                type: "array",
-                items: {
-                    type: "object",
-                }
-            }, 
             content: {
                 type: 'array'
             }
