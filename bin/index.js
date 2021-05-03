@@ -2,7 +2,19 @@
 
 const ready = require("../src/ready.js");
 const Utils = require("../src/utils.js");
+const package = require("../package.json");
 
-const { _: _path } = Utils.useOptions(process.argv);
+const { _: _path, v = undefined } = Utils.useOptions(process.argv);
 
-ready(_path[0]);
+function bootstrap() {
+    if (v) {
+        Utils.doneLog(`DOCUSEE version => ${package.version}`);
+        return;
+    }
+
+    if (_path) {
+        ready(_path[0]);
+    }
+}
+
+bootstrap();
