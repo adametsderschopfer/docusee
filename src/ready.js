@@ -5,6 +5,11 @@ import { CreateDocs } from "./index.js";
 import Utils from "../src/utils.js";
 
 export function ready(p) {
+    if (!p) {
+        Utils.errLog("You must specify the path like here => \n docusee ./path/to/your/docs.json");
+        return;
+    }
+
     Utils.createView();
     const normalizedPath = path.resolve(p);
     const needExt = ".json" || ".json5";
@@ -13,7 +18,7 @@ export function ready(p) {
     const errMessage = () =>
         Utils.errLog("Nothing has been found along this path...");
 
-    if (ext !== needExt) {
+    if (ext && ext !== needExt) {
         Utils.errLog(`[${ext}] - is not supported`);
         return;
     }

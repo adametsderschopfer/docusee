@@ -9,13 +9,10 @@ $ npm install -g docusee
 
 
 First, you need to create a file with the * .json extension, and fill it with the template below
+These fields are required
 ```
 {
     "title": "Docusee",
-    "preview": {
-        "title": "Docusee",
-        "description": "Docusee - created for example bla bla bla"
-    },
     "content": [
         {
             "title": "First block title", 
@@ -35,12 +32,12 @@ First, you need to create a file with the * .json extension, and fill it with th
 Also you can add a start preview page add to the template
 ```
 {
-    "title": "Docusee",
-	  "preview":{
-      	"title":"Docusee",
-      	"description":"Docusee - created for example bla bla bla"
-  	 },
-...
+   "title":"Docusee",
+   "preview":{
+      "title":"Docusee",
+      "description":"Docusee - created for example bla bla bla"
+   }
+   ...
 }
 ```
 
@@ -59,5 +56,5 @@ if you want to use this generator as a function, you need to do the previous ste
 ```
 const {ready} = require('docusee'); // import {ready} from 'docusee';
 
-ready(" ./path/to/your/docs.json");
+ready("./path/to/your/docs.json");
 ````
