@@ -1,6 +1,6 @@
 {
     "name": "docusee",
-    "version": "1.2.6",
+    "version": "1.2.7",
     "description": "Docusee created for create web site with documentation from json-object",
     "main": "bin/index.js",
     "scripts": {
