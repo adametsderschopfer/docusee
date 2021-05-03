@@ -62,9 +62,9 @@ Then next to the specified json file a folder will appear called "docs-html"
 if you want to use this generator as a function, you need to do the previous step with creating a \* .json file, then perform the following
 
 ```
-const {ready} = require('docusee');
+const docusee = require('docusee');
 
-ready("./path/to/your/docs.json");
+docusee("./path/to/your/docs.json");
 ```
 
 ## Orther
