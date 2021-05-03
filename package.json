@@ -1,5 +1,5 @@
 {
-  "name": "docusee-cli",
+  "name": "@addesign/docusee",
   "version": "1.0.1",
   "description": "docusee created for create web site with documentation from json-object",
   "main": "bin/index.js",

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+ <html>
+   <head>
+     <%- head %>
+   </head>
+   
+   <body>
+     <header class="py-3 mb-3 border-bottom">
+       <div class="container-fluid d-grid gap-3 align-items-center  justify-content-between" style="grid-template-columns: 1fr 2fr;">
+           <h3><%= title %></h3>
+            <button type="button" class="btn btn-primary js-menu-btn menu-btn"><svg height="384pt" viewBox="0 -53 384 384" width="384pt" xmlns="http://www.w3.org/2000/svg"><path d="m368 154.667969h-352c-8.832031 0-16-7.167969-16-16s7.167969-16 16-16h352c8.832031 0 16 7.167969 16 16s-7.167969 16-16 16zm0 0"/><path d="m368 32h-352c-8.832031 0-16-7.167969-16-16s7.167969-16 16-16h352c8.832031 0 16 7.167969 16 16s-7.167969 16-16 16zm0 0"/><path d="m368 277.332031h-352c-8.832031 0-16-7.167969-16-16s7.167969-16 16-16h352c8.832031 0 16 7.167969 16 16s-7.167969 16-16 16zm0 0"/></svg></button>
+           <!-- <div class="d-flex align-items-center">
+                <input type="search" class="form-control js-search" placeholder="Write and press enter...">
+           </div> -->
+       </div>
+     </header>
+
+     <% if (content && content.length) { %>
+        <aside class="aside p-3 bg-white menu js-menu" style="width: 280px;">
+                <span class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
+                    <svg class="bi me-2" width="30" height="24">
+                        <use xlink:href="#bootstrap"></use>
+                    </svg>
+                    <span class="fs-5 fw-semibold">Navigation</span>
+                </span>
+                <ul class="list-unstyled ps-0">
+                    <% content.forEach((c, idx) =>{ %>
+                            <li class="mb-1">
+                                <a 
+                                    class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" 
+                                    data-bs-target="#dashboard-collapse-<%=idx%>" 
+                                    aria-expanded="false"
+                                    href="#<%=c.title%>-<%=idx%>"
+                                >
+                                    <%=c.title%> 
+                                </a>
+                                <div class="collapse" id="dashboard-collapse-<%=idx%>">
+                                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                        <%c.list.forEach((opt, idx_sub) => {%>
+                                            <li><a href="#<%=opt.title%>-<%=idx%>-<%=idx_sub%>" class="link-dark rounded"><%=opt.title%></a></li>
+                                        <%})%>
+                                    </ul>
+                                </div>
+                            </li> 
+                    <% }) %>
+                </ul>
+            </aside>
+     <%}%>
+   
+       <main class="content js-search-content">
+        <% if (preview) { %>
+            <div class="p-5 mb-4 bg-dark text-white rounded-3">
+               <div class="container-fluid py-5">
+                   <h1 class="display-5 fw-bold"><%= preview.title%></h1>
+                   <p class="col-md-8 fs-4"><%= preview.description%></p>
+               </div> 
+           </div> 
+        <% } %>
+
+        <% if (content) { %>
+            <% content.forEach((c, idx) =>{ %>
+                <a name="<%=c.title%>-<%=idx%>"><h1><b><%= c.title %></b></h1></a>
+                
+                <div class="pt-2" style="padding-left: 1rem;">
+                    <% c.list.forEach(({title, contetn}, idx_sub) =>{ %>
+                        <a name="<%=title%>-<%=idx%>-<%=idx_sub%>"><h2><%= title %></h2></a>
+                       
+                        <div class="pt-2" style="padding-left: 1rem;">
+                            <% contetn.forEach((text) => { %>
+                                <p><%- text %></p>
+                            <% }) %>
+                        </div>
+                    <% }) %>
+                </div>
+            <% }) %>
+        <% } %>
+       </main>  
+     <%- footer %>
+       
+     </body>
+ </html>
