@@ -54,7 +54,7 @@ Then next to the specified json file a folder will appear called "docs-html"
 ## Use in code
 if you want to use this generator as a function, you need to do the previous step with creating a * .json file, then perform the following
 ```
-const {ready} = require('docusee'); // import {ready} from 'docusee';
+const {ready} = require('docusee');
 
 ready("./path/to/your/docs.json");
 ````
