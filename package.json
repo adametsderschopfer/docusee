@@ -1,7 +1,7 @@
 {
-  "name": "@addesign/docusee",
+  "name": "docusee",
   "version": "1.0.1",
-  "description": "docusee created for create web site with documentation from json-object",
+  "description": "Docusee created for create web site with documentation from json-object",
   "main": "bin/index.js",
   "scripts": {
     "test": "jest"
@@ -14,7 +14,10 @@
     "js",
     "documentation",
     "docs",
-    "docs-generator"
+    "docs-generator",
+    "docusee",
+    "documentation",
+    "generator",
   ],
   "type": "module",
   "bin": {
