@@ -1,1 +1,1 @@
-export * from './src/ready.js';
+module.exports = require("./src/ready");

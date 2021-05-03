@@ -1,12 +1,12 @@
-import { Validator } from "jsonschema";
-import Utils from "./utils.js";
-import fs from "fs";
-import pretty from "pretty";
-import {render} from "ejs";
-import * as path from "path";
-import rimraf from "rimraf";
+const { Validator } = require("jsonschema");
+const Utils = require("./utils.js");
+const fs = require("fs");
+const pretty = require("pretty");
+const { render } = require("ejs");
+const path = require("path");
+const rimraf = require("rimraf");
 
-export class CreateDocs {
+class CreateDocs {
     constructor({ json, path }) {
         if (!json) {
             Utils.errLog("Nothing has been found along this path...");
@@ -24,9 +24,6 @@ export class CreateDocs {
         css: ["template_style.css", "bootstrap.min.css"],
         js: ["bootstrap.bundle.js", "main.js"],
     };
-
-    pathToPublic = path.dirname(
-            import.meta.url).replace("file:///", "");
 
     bugCollector(errs) {
         let errors = [];
@@ -70,7 +67,7 @@ export class CreateDocs {
             if (this.FILES[fileExt].length) {
                 this.FILES[fileExt].map((file) => {
                     fs.copyFile(
-                        `${this.pathToPublic}/public/${fileExt}/${file}`,
+                        path.join(__dirname, `/public/${fileExt}/${file}`),
                         `${_path}/${file}`,
                         (err) => {
                             if (err) {
@@ -115,18 +112,18 @@ export class CreateDocs {
         Utils.processLog("Remove old dir...");
         return new Promise((fulfilled, rej) => {
             rimraf(dir, (err) => {
-                if (err) { 
-                    rej(err); 
-                    return
-                } 
+                if (err) {
+                    rej(err);
+                    return;
+                }
 
-                fulfilled(); 
-            })
-        })
+                fulfilled();
+            });
+        });
     }
 
     create(_json) {
-        return new Promise(async (fulfilled, rej) => {
+        return new Promise(async(fulfilled, rej) => {
             const { dir } = path.parse(this.path);
 
             try {
@@ -135,8 +132,10 @@ export class CreateDocs {
 
                 Utils.processLog("Start create template...");
 
-                const template = new DOCSTemplate(_json, this.pathToPublic);
-                const buffer = Buffer.from(pretty(template.getTemplate(), { ocd: true }));
+                const template = new DOCSTemplate(_json);
+                const buffer = Buffer.from(
+                    pretty(template.getTemplate(), { ocd: true })
+                );
 
                 fs.writeFile(`${_path}/index.html`, buffer, "utf-8", (err) => {
                     if (err) {
@@ -148,9 +147,9 @@ export class CreateDocs {
                 });
             } catch (error) {
                 Utils.errLog(`Something went wrong: ${error}`);
-                rej()
+                rej();
             }
-        })
+        });
     }
 
     async start() {
@@ -158,7 +157,7 @@ export class CreateDocs {
             const { json } = await this.validate();
 
             await this.create(json);
-            Utils.doneLog('Docs was created!')
+            Utils.doneLog("Docs was created!");
         } catch (err) {
             Utils.errLog(JSON.stringify(err, null, 2));
         }
@@ -168,22 +167,21 @@ export class CreateDocs {
 function getSchema() {
     return {
         type: "object",
-        properties: { 
+        properties: {
             title: {
                 type: "string",
             },
             content: {
-                type: 'array'
-            }
+                type: "array",
+            },
         },
         required: ["title", "content"],
     };
 }
 
 class DOCSTemplate {
-    constructor(data, pathToPublic) {
+    constructor(data) {
         this.data = data;
-        this.pathToPublic = pathToPublic;
     }
 
     getHead() {
@@ -209,14 +207,18 @@ class DOCSTemplate {
         const head = this.getHead();
         const footer = this.getFooter();
 
-        const common = fs.readFileSync(`${this.pathToPublic}/page.ejs`, 'utf-8')
+        const common = fs.readFileSync(path.join(__dirname, `/page.ejs`), "utf-8");
 
         const html = render(common, {
-            head, 
+            head,
             footer,
-            ...this.data
-        })
+            ...this.data,
+        });
 
         return html;
     }
 }
+
+module.exports = {
+    CreateDocs,
+};

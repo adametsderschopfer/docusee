@@ -1,12 +1,14 @@
-import * as path from "path";
-import * as fs from "fs";
+const path = require("path");
+const fs = require("fs");
 
-import { CreateDocs } from "./index.js";
-import Utils from "../src/utils.js";
+const { CreateDocs } = require("./index.js");
+const Utils = require("../src/utils.js");
 
-export function ready(p) {
+function ready(p) {
     if (!p) {
-        Utils.errLog("You must specify the path like here => \n docusee ./path/to/your/docs.json");
+        Utils.errLog(
+            "You must specify the path like here => \n docusee ./path/to/your/docs.json"
+        );
         return;
     }
 
@@ -22,7 +24,7 @@ export function ready(p) {
         Utils.errLog(`[${ext}] - is not supported`);
         return;
     }
-    
+
     Utils.processLog("Check exists...");
 
     fs.stat(normalizedPath, (err, stats) => {
@@ -44,3 +46,5 @@ export function ready(p) {
         }
     });
 }
+
+module.exports = ready;
